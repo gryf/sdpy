@@ -14,6 +14,9 @@ SDpy uses the Python3, and following libraries:
 * pystardict
 * rapidfuzz
 
+This project also uses a `scroll widget`_ from `stig`_ project (included in the
+sources).
+
 
 Installation
 ------------
@@ -83,3 +86,7 @@ License
 -------
 
 This work is licensed on GPL3 license. See LICENSE file for details.
+
+.. _pypi: https://pypi.org
+.. _scroll widget: https://github.com/rndusr/stig/blob/8e2b5679eae3e78017400ae35fea8b3eb5652ee4/stig/tui/scroll.py
+.. _stig: https://github.com/rndusr/stig
