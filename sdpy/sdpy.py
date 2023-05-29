@@ -196,7 +196,7 @@ class App(object):
         self.loop.run()
 
 
-def main(self):
+def main():
     app = App()
     app.start()
 
