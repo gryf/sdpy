@@ -83,6 +83,25 @@ class DictHandler:
                 except Exception:
                     warnings.warn(f'There is an issue loading dictionary with '
                                   f'filebase {options["filebase"]}.')
+
+        try:
+            find_recursively = cp.get('DEFAULT', 'find-recursively-dir')
+            if not find_recursively:
+                return
+            for root, dires, files in os.walk(find_recursively):
+                for fname in files:
+                    if fname.lower().endswith('.ifo'):
+                        fpath = os.path.join(root, fname[:-4])
+                        try:
+                            d = Dict(fpath)
+                            d.load_dict()
+                            self.dicts.append(d)
+                        except Exception:
+                            pass
+
+        except configparser.NoOptionError:
+            pass
+
     def keys(self):
         if not self._keys:
             keys = []
