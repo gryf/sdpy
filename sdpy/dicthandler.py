@@ -1,5 +1,6 @@
 import configparser
 import os
+import warnings
 
 import pystardict
 import rapidfuzz
@@ -71,7 +72,8 @@ class DictHandler:
                 if options.get('filebase'):
                     dictfile = os.path.join(basedir, options['filebase'])
                 else:
-                    # no dictfile, warning?
+                    warnings.warn(f'Dictionary filebase in section {section} '
+                                  f'not found. Check your configuration')
                     continue
 
                 name = section if use_section_name else options.get('name')
@@ -97,8 +99,9 @@ class DictHandler:
                             d.load_dict()
                             self.dicts.append(d)
                         except Exception:
-                            pass
-
+                            warnings.warn(f'There is an issue loading '
+                                          f'dictionary with filebase '
+                                          f'{fpath}.')
         except configparser.NoOptionError:
             pass
 
