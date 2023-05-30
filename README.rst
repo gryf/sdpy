@@ -4,6 +4,9 @@ SDpy
 
 SDpy is a TUI application for querying StarDict dictionaries.
 
+.. image:: /images/iface.png?raw=true
+      :alt: sdpy interface
+
 
 Requirements
 ------------
@@ -61,6 +64,7 @@ means ``~/.config``. Config is very simple:
 
    [DEFAULT]
    basedir = /usr/share/stardict/dic
+   use-section-name = false
 
    [dict.1]
    filebase = dictd_www.freedict.de_eng-spa
@@ -73,13 +77,15 @@ means ``~/.config``. Config is very simple:
 Where
 
 * ``basedir`` - optional path to the dictionary files, saves typing whole path
+* ``use-section-name`` - false by default, forces sections name to be used
+  instead of name field
 * ``filebase`` - mandatory filename of the database (without extensions like
   ``.idx``, ``.dict``, ``.dict.dz``, ``.ifo``)
-* ``name`` - optional name of the dictionary. If omitted, section name will be
-  used.
+* ``name`` - optional name of the dictionary. If omitted, name will be obtained
+  form dictionary ``.ifo`` file ``bookname`` field
 
 Sections can be named whatever you want, it doesn't matter, and will be used
-only if name is missing.
+instead of provided (or not) name only if ``use-section-name`` is set to true.
 
 
 License

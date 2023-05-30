@@ -9,8 +9,8 @@ XDG_CONF_DIR = os.getenv('XDG_CONFIG_HOME', os.path.expanduser('~/.config'))
 
 
 class Dict:
-    def __init__(self, name, dictfile):
-        self.name = name
+    def __init__(self, dictfile, name=None):
+        self._name = name
         self.dictfile = dictfile
         self.dictionary = None
 
@@ -24,6 +24,20 @@ class Dict:
         if key not in self.dictionary:
             return None
         return self.dictionary[key]
+
+    @property
+    def name(self):
+        # precedence have provided by user custom name, than if
+        # use-section-name is set to true, section name will be used, and as a
+        # fallback bookname from the dictionary file.
+        if self._name:
+            return self._name
+        if self.dictionary:
+            try:
+                return self.dictionary.ifo.bookname
+            except Exception:
+                warnings.warn(f'Seems like {self.dictfile} have no bookname '
+                              f'in ifo')
 
 
 class DictHandler:
@@ -45,24 +59,30 @@ class DictHandler:
             basedir = cp.get('DEFAULT', 'basedir')
         except configparser.NoOptionError:
             basedir = ''
+        try:
+            use_section_name = cp.getboolean('DEFAULT', 'use-section-name')
+        except configparser.NoOptionError:
+            use_section_name = False
 
         for section in cp.sections():
             if cp.items(section=section):
                 options = dict(cp.items(section=section))
+
                 if options.get('filebase'):
                     dictfile = os.path.join(basedir, options['filebase'])
                 else:
                     # no dictfile, warning?
                     continue
 
-                if options.get('name'):
-                    name = options['name']
-                else:
-                    name = section
-                dictionary = Dict(name, dictfile)
-                dictionary.load_dict()
-                self.dicts.append(dictionary)
+                name = section if use_section_name else options.get('name')
 
+                try:
+                    dictionary = Dict(dictfile, name)
+                    dictionary.load_dict()
+                    self.dicts.append(dictionary)
+                except Exception:
+                    warnings.warn(f'There is an issue loading dictionary with '
+                                  f'filebase {options["filebase"]}.')
     def keys(self):
         if not self._keys:
             keys = []
