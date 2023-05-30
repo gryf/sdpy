@@ -65,6 +65,7 @@ means ``~/.config``. Config is very simple:
    [DEFAULT]
    basedir = /usr/share/stardict/dic
    use-section-name = false
+   find-recursively-dir = 
 
    [dict.1]
    filebase = dictd_www.freedict.de_eng-spa
@@ -79,6 +80,8 @@ Where
 * ``basedir`` - optional path to the dictionary files, saves typing whole path
 * ``use-section-name`` - false by default, forces sections name to be used
   instead of name field
+* ``find-recursively-dir`` - instead of manually adding dicts one by one, scan
+  provided directory for dictionary files
 * ``filebase`` - mandatory filename of the database (without extensions like
   ``.idx``, ``.dict``, ``.dict.dz``, ``.ifo``)
 * ``name`` - optional name of the dictionary. If omitted, name will be obtained
@@ -86,6 +89,11 @@ Where
 
 Sections can be named whatever you want, it doesn't matter, and will be used
 instead of provided (or not) name only if ``use-section-name`` is set to true.
+
+Note, that section order determine order of displayed definitions on the
+definitions view. Automatically scanned directory doesn't guarantee the order.
+Also note, that adding many dictionaries will increase startup time and
+searching for the terms.
 
 
 License
