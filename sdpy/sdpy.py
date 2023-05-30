@@ -171,9 +171,9 @@ class App(object):
         f2 = scroll.ScrollBar(scroll.Scrollable(self.detail_view))
 
         self.search = urwid.LineBox(self.search_box, title_align="left")
-        self.c_list = urwid.LineBox(f1, title="Words")
+        self.c_list = urwid.LineBox(f1, title="Keywords")
 
-        c_details = urwid.LineBox(f2, title="item Details")
+        c_details = urwid.LineBox(f2, title="Definition")
 
         self.columns = urwid.Columns([('weight', 30, self.c_list),
                                       ('weight', 70, c_details)])
