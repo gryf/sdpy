@@ -65,7 +65,6 @@ means ``~/.config``. Config is very simple:
    [DEFAULT]
    basedir = /usr/share/stardict/dic
    use-section-name = false
-   find-recursively-dir = 
 
    [dict.1]
    filebase = dictd_www.freedict.de_eng-spa
@@ -74,6 +73,7 @@ means ``~/.config``. Config is very simple:
    [dict.2]
    filebase = quick_english-japanese
    name = Quick English-Japanese
+   find-recursively-dir = 
 
 Where
 
