@@ -13,9 +13,9 @@ Requirements
 
 SDpy uses the Python3, and following libraries:
 
-* URWID
-* pystardict
-* rapidfuzz
+* `URWID`_
+* `pystardict`_
+* `rapidfuzz`_
 
 This project also uses a `scroll widget`_ from `stig`_ project (included in the
 sources).
@@ -23,14 +23,6 @@ sources).
 
 Installation
 ------------
-
-Currently it is possible to install SDpy with virtualenv
-
-Installation
-------------
-
-SDpy can be installed using virtualenv:
-didn't place it on `pypi`_ yet.
 
 Preferred way for installation is to use virtualenv (or any other virtualenv
 managers), i.e:
@@ -41,7 +33,7 @@ managers), i.e:
    $ . venv/bin/activate
    (venv) $ git clone https://github.com/gryf/sdpy
    (venv) $ cd sdpy
-   (venv) $ pip install -r requirements.txt .
+   (venv) $ pip install .
 
 Or via pip:
 
@@ -49,7 +41,7 @@ Or via pip:
 
    $ git clone https://github.com/gryf/sdpy
    $ cd sdpy
-   $ pip install --user -r requirements.txt .
+   $ pip install --user .
 
 Executable ``sdpy`` should be now available in the ``$PATH``.
 
@@ -92,8 +84,8 @@ instead of provided (or not) name only if ``use-section-name`` is set to true.
 
 Note, that section order determine order of displayed definitions on the
 definitions view. Automatically scanned directory doesn't guarantee the order.
-Also note, that adding many dictionaries will increase startup time and
-searching for the terms.
+Also note, that adding many dictionaries will increase startup time and will
+have impact on searching for the terms.
 
 
 License
@@ -104,3 +96,6 @@ This work is licensed on GPL3 license. See LICENSE file for details.
 .. _pypi: https://pypi.org
 .. _scroll widget: https://github.com/rndusr/stig/blob/8e2b5679eae3e78017400ae35fea8b3eb5652ee4/stig/tui/scroll.py
 .. _stig: https://github.com/rndusr/stig
+.. _URWID: http://urwid.org
+.. _pystardict: https://github.com/lig/pystardict
+.. _rapidfuzz: https://rapidfuzz.github.io/RapidFuzz
