@@ -57,9 +57,9 @@ class DictHandler:
         cp = configparser.ConfigParser()
         cp.read(conf)
         try:
-            basedir = cp.get('DEFAULT', 'basedir')
+            global_basedir = cp.get('DEFAULT', 'basedir')
         except configparser.NoOptionError:
-            basedir = ''
+            global_basedir = ''
         try:
             use_section_name = cp.getboolean('DEFAULT', 'use-section-name')
         except configparser.NoOptionError:
@@ -68,6 +68,10 @@ class DictHandler:
         for section in cp.sections():
             if cp.items(section=section):
                 options = dict(cp.items(section=section))
+                if options.get('basedir'):
+                    basedir = options.get('basedir')
+                else:
+                    basedir = global_basedir
 
                 if options.get('filebase'):
                     dictfile = os.path.join(basedir, options['filebase'])

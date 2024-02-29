@@ -82,6 +82,10 @@ Where
 Sections can be named whatever you want, it doesn't matter, and will be used
 instead of provided (or not) name only if ``use-section-name`` is set to true.
 
+You can use ``filebase`` as relative path to the global ``basedir`` or local
+``basedir`` placed in each section or even provide basedir for selected
+sections.
+
 Note, that section order determine order of displayed definitions on the
 definitions view. Automatically scanned directory doesn't guarantee the order.
 Also note, that adding many dictionaries will increase startup time and will
