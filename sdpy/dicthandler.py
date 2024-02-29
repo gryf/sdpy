@@ -1,5 +1,6 @@
 import configparser
 import os
+import sys
 import warnings
 
 import pystardict
@@ -55,7 +56,12 @@ class DictHandler:
             return
 
         cp = configparser.ConfigParser()
-        cp.read(conf)
+        try:
+            cp.read(conf)
+        except configparser.Error as err:
+            print("There were errors reading config: %s" % err.message)
+            sys.exit(10)
+
         try:
             global_basedir = cp.get('DEFAULT', 'basedir')
         except configparser.NoOptionError:
