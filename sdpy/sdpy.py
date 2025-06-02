@@ -4,7 +4,6 @@ import urwid
 
 from sdpy import htmlhandler
 from sdpy import dicthandler
-from sdpy import scroll
 
 
 class ListItem(urwid.WidgetWrap):
@@ -85,7 +84,7 @@ class App(object):
 
     def unhandled_input(self, key):
         if key in ('esc',):
-            raise urwid.ExitMainLoop()
+            raise urwid.ExitMainLoop
         if key in ('down',):
             if self.frame.focus.base_widget == self.search_box:
                 self.frame.focus_position = 'body'
@@ -168,7 +167,7 @@ class App(object):
         h = col_rows[0] - 2
 
         f1 = urwid.Filler(self.list_view, valign='top', height=h)
-        f2 = scroll.ScrollBar(scroll.Scrollable(self.detail_view))
+        f2 = urwid.ScrollBar(urwid.Scrollable(self.detail_view))
 
         self.search = urwid.LineBox(self.search_box, title_align="left")
         self.c_list = urwid.LineBox(f1, title="Keywords")
