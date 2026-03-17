@@ -31,8 +31,8 @@ def _remove_html_tags(text):
     """
     Simply remove html tags
     """
-    text = HR.sub('\n', text)
-    text = BR.sub('\n' + 40 * '-' + '\n', text)
+    text = BR.sub('\n', text)
+    text = HR.sub('\n' + 40 * '-' + '\n', text)
     index = 0
 
     while True:
