@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sdpy"
+version = "0.0.1"
+authors = [
+    {name = "Roman Dobosz", email = "gryf73@gmail.com"}
+]
+license = "GPL-3.0-or-later"
+description = "SDpy is a TUI application for querying StarDict dictionaries."
+readme = "README.rst"
+requires-python = ">=3.11"
+keywords = ["stardict", "dict", "tui", "console"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: End Users/Desktop",
+    "Topic :: Terminals",
+    "Topic :: Utilities",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3 :: Only"
+]
+dependencies = [
+    "PyStarDict>=0.8",
+    "rapidfuzz>=2.15.1",
+    "urwid>=3.0.4"
+]
+
+[project.urls]
+Homepage = "https://github.com/gryf/sdpy"
+
+[project.scripts]
+sdpy = "sdpy.sdpy:main"
+
+[tool.setuptools]
+packages = ["sdpy"]
+
+[tool.ruff]
+line-length = 79
+indent-width = 4
+
+[tool.ruff.lint]
+extend-select = [
+    "B",  # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "E",  # pycodestyle
+    "F",  # pyflakes
+    "FA",  # flake8-future-annotations
+    "G",  # flake8-logging-format
+    "N",  # pep8-naming
+    "PGH",  # pygrep-hooks
+    "PIE",  # flake8-pie
+    "RET",  # flake8-return
+    "SIM",  # flake8-simplify
+    "UP",  # pyupgrade
+    "W",  # pycodestyle
+    "YTT",  # flake8-2020
+]
