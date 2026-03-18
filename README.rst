@@ -57,6 +57,9 @@ means ``~/.config``. Config is very simple:
    [DEFAULT]
    basedir = /usr/share/stardict/dic
    use-section-name = false
+   fuzzy-ratio = 85
+   len-phrase = 4
+   max-definitions = -1
 
    [dict.1]
    filebase = dictd_www.freedict.de_eng-spa
@@ -72,6 +75,18 @@ Where
 * ``basedir`` - optional path to the dictionary files, saves typing whole path
 * ``use-section-name`` - false by default, forces sections name to be used
   instead of name field
+* ``fuzzy-ratio`` - indicates phrase similarity. The higher the number, the
+  more precise entry must be. Highest possible value is 100. Default is 85.
+  Note, don't provide too low values, as the search will become unusable, and
+  the listed results may be totally random.
+* ``len-phrase`` - by default definition are searched by first couple of
+  letters, by default 4. This behaviour may become default if set pretty high
+  number here - fuzzy find will never be used in that case.
+* ``max-definitions`` - display only specified number of definitions on the
+  list view. By default all of them will be displayed using negative number.
+  Adding any positive number will display that much of found definitions at
+  most, and setting 0 will display no definitions in case search phrase is
+  empty.
 * ``find-recursively-dir`` - instead of manually adding dicts one by one, scan
   provided directory for dictionary files
 * ``filebase`` - mandatory filename of the database (without extensions like

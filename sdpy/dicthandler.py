@@ -62,14 +62,22 @@ class DictHandler:
             print("There were errors reading config: %s" % err.message)
             sys.exit(10)
 
-        try:
-            global_basedir = cp.get('DEFAULT', 'basedir')
-        except configparser.NoOptionError:
-            global_basedir = ''
-        try:
-            use_section_name = cp.getboolean('DEFAULT', 'use-section-name')
-        except configparser.NoOptionError:
-            use_section_name = False
+        defaults = {'basedir': '',
+                    'use-section-name': False,
+                    'max-definitions': -1,
+                    'len-phrase': 4,
+                    'fuzzy-ratio': 85}
+
+        for key in defaults:
+            try:
+                if key in ('max-definitions', 'len-phrase', 'fuzzy-ratio'):
+                    defaults[key] = cp.getint('DEFAULT', key)
+                else:
+                    defaults[key] = cp.get('DEFAULT', key)
+            except (configparser.NoOptionError, ValueError):
+                pass
+
+        self.conf = defaults
 
         for section in cp.sections():
             if cp.items(section=section):
@@ -77,7 +85,7 @@ class DictHandler:
                 if options.get('basedir'):
                     basedir = options.get('basedir')
                 else:
-                    basedir = global_basedir
+                    basedir = defaults['basedir']
 
                 if options.get('filebase'):
                     dictfile = os.path.join(basedir, options['filebase'])
@@ -86,7 +94,8 @@ class DictHandler:
                                   f'not found. Check your configuration')
                     continue
 
-                name = section if use_section_name else options.get('name')
+                name = (section if defaults['use-section-name'] else
+                        options.get('name'))
 
                 try:
                     dictionary = Dict(dictfile, name)
@@ -137,16 +146,34 @@ class DictHandler:
         if not self._keys:
             self.keys()
 
+        # if phrase is empty, return, depending on the settings
+        if not phrase:
+            if self.conf['max-definitions'] < 0:
+                # all keys
+                return list(self._keys)
+            elif self.conf['max-definitions'] == 0:
+                # no keys
+                return []
+            else:
+                # only fixed amount of keys
+                return list(self._keys[:self.conf['max-definitions']])
+
         result = []
-        if len(phrase) < 4:
+        if len(phrase) < self.conf['len-phrase']:
             # do matching based only on the beginning of the word match to the
             # phrase.
             for k in self._keys:
                 if k.startswith(phrase):
                     result.append(k)
-            return result
+            if self.conf['max-definitions'] > 0:
+                return result[:self.conf['max-definitions']]
+            else:
+                return result
 
         for k in self._keys:
-            if rapidfuzz.fuzz.ratio(k, phrase) > 85:
+            if rapidfuzz.fuzz.ratio(k, phrase) > self.conf['fuzzy-ratio']:
                 result.append(k)
-        return result
+        if self.conf['max-definitions'] > 0:
+            return result[:self.conf['max-definitions']]
+        else:
+            return result

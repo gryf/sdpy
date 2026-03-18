@@ -208,7 +208,6 @@ class App(object):
         self.list_view.set_data(data)
 
     def start(self):
-        self.update_data(self.dhandler.keys()[:100])
         self.loop.run()
 
 
