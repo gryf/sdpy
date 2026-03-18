@@ -6,6 +6,8 @@ from sdpy import htmlhandler
 from sdpy import dicthandler
 
 
+SEARCH = 'Search: '
+
 class ListItem(urwid.WidgetWrap):
     def __init__(self, item):
         self.content = item
@@ -73,7 +75,7 @@ class DetailView(urwid.WidgetWrap):
 
 class SearchBox(urwid.WidgetWrap):
     def __init__(self):
-        self.t = urwid.Edit(caption="Search: ")
+        self.t = urwid.Edit(caption=SEARCH)
         urwid.WidgetWrap.__init__(self, self.t)
 
     def selectable(self):
@@ -115,6 +117,21 @@ class App(object):
                 self.frame.focus_position = 'body'
                 self.columns.focus_position = 0
                 self.list_view.set_focus()
+        if (key in ('ctrl a',) and
+            self.frame.focus.base_widget == self.search_box):
+            self.search_box.t.set_edit_pos(0)
+        if (key in ('ctrl e',) and
+            self.frame.focus.base_widget == self.search_box):
+            self.search_box.t.set_edit_pos(len(self.search_box.t.edit_text))
+        if (key == 'ctrl w' and
+            self.frame.focus.base_widget == self.search_box):
+            text = self.search_box.t.get_text()[0]
+            if not text:
+                return
+            cursor = self.search_box.t.get_cursor_coords((len(text) + 1,))[0]
+            if cursor > len(SEARCH):
+                self.search_box.t.set_edit_text(text[cursor:])
+                self.search_box.t.set_edit_pos(0)
 
     def show_details(self, item):
         definitions = self.dhandler.get_definition(item)
