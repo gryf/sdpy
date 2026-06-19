@@ -1,4 +1,5 @@
 import asyncio
+import sys
 
 import urwid
 
@@ -198,7 +199,7 @@ class App(object):
                                  header=self.search,
                                  focus_part="header")
 
-        evl = urwid.AsyncioEventLoop(loop=asyncio.get_event_loop())
+        evl = urwid.AsyncioEventLoop(loop=asyncio.new_event_loop())
         self.loop = urwid.MainLoop(self.frame, self.palette, event_loop=evl,
                                    unhandled_input=self.unhandled_input)
 
